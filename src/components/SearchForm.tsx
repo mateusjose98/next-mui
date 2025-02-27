@@ -30,10 +30,8 @@ import {
 } from "@mui/material";
 
 interface FormData {
-  companyName: string;
   cnpj: string;
-  dateFrom: string;
-  dateTo: string;
+  ie: string;
   isActive: boolean;
   companyType: string;
   industry: string;
@@ -42,10 +40,8 @@ interface FormData {
 
 export default function SearchForm() {
   const [formData, setFormData] = useState<FormData>({
-    companyName: "",
     cnpj: "",
-    dateFrom: "",
-    dateTo: "",
+    ie: "",
     isActive: false,
     companyType: "",
     industry: "",
@@ -89,32 +85,17 @@ export default function SearchForm() {
   };
 
   return (
-    <Card sx={{ mb: 4 }}>
-      <CardHeader
-        title="Company Search"
-        titleTypographyProps={{ variant: "h5" }}
-        sx={{ backgroundColor: "secondary.main", color: "text.primary" }}
-      />
-      <CardContent>
+<>
         <Box
           component="form"
           noValidate
           autoComplete="off"
           onSubmit={handleSubmit}
+          sx={{ m: 2 }}
         >
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                id="company-name"
-                name="companyName"
-                label="Search for a company"
-                variant="outlined"
-                value={formData.companyName}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
+           
+            <Grid item xs={6}>
               <InputMask
                 mask="99.999.999/9999-99"
                 value={formData.cnpj}
@@ -133,34 +114,6 @@ export default function SearchForm() {
               </InputMask>
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                fullWidth
-                id="date-from"
-                name="dateFrom"
-                label="Date From"
-                type="date"
-                value={formData.dateFrom}
-                onChange={handleChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                id="date-to"
-                name="dateTo"
-                label="Date To"
-                type="date"
-                value={formData.dateTo}
-                onChange={handleChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -169,57 +122,34 @@ export default function SearchForm() {
                     name="isActive"
                   />
                 }
-                label="Active Companies Only"
+                label="Buscar por núcleo CNPJ"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  row
-                  aria-label="company-type"
-                  name="companyType"
-                  value={formData.companyType}
-                  onChange={handleChange}
-                >
-                  <FormControlLabel
-                    value="public"
-                    control={<Radio />}
-                    label="Public"
+            <Grid item xs={6}>
+              <InputMask
+                mask="99.999.999/9999-99"
+                value={formData.ie}
+                onChange={handleCnpjChange}
+                maskChar="_"
+              >
+                {() => (
+                  <TextField
+                    fullWidth
+                    id="ie"
+                    name="ie"
+                    label="Inscrição Estadual"
+                    variant="outlined"
                   />
-                  <FormControlLabel
-                    value="private"
-                    control={<Radio />}
-                    label="Private"
-                  />
-                  <FormControlLabel
-                    value="both"
-                    control={<Radio />}
-                    label="Both"
-                  />
-                </RadioGroup>
-              </FormControl>
+                )}
+              </InputMask>
             </Grid>
+          
+           
+          
+            
             <Grid item xs={6}>
               <FormControl fullWidth>
-                <InputLabel id="industry-label">Industry</InputLabel>
-                <Select
-                  labelId="industry-label"
-                  id="industry"
-                  name="industry"
-                  value={formData.industry}
-                  label="Industry"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="tech">Technology</MenuItem>
-                  <MenuItem value="finance">Finance</MenuItem>
-                  <MenuItem value="healthcare">Healthcare</MenuItem>
-                  <MenuItem value="retail">Retail</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <InputLabel id="locations-label">Locations</InputLabel>
+                <InputLabel id="locations-label">Situação</InputLabel>
                 <Select
                   labelId="locations-label"
                   id="locations"
@@ -234,28 +164,35 @@ export default function SearchForm() {
                     />
                   }
                   renderValue={(selected) => (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.1 }}>
                       {(selected as string[]).map((value) => (
-                        <Chip key={value} label={value} />
+                        <Chip style={{ height: 20 }} key={value} label={value} />
                       ))}
                     </Box>
                   )}
                 >
-                  <MenuItem value="usa">USA</MenuItem>
-                  <MenuItem value="europe">Europe</MenuItem>
-                  <MenuItem value="asia">Asia</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
+                  <MenuItem value="Todos">Todos</MenuItem>
+                  <MenuItem value="Inativa">Inativa</MenuItem>
+                  <MenuItem value="Ativa">Ativa</MenuItem>
+                  <MenuItem value="Homlogação">Homlogação</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary">
-                Search
+              
+            <Box display="flex" justifyContent="flex-end">
+             <Button type="submit" variant="outlined" color="primary">
+                Limpar
               </Button>
+              <Button style={{marginLeft: '5px'}} type="submit" variant="contained" color="primary">
+                Pesquisar
+              </Button>
+            </Box>
+             
             </Grid>
           </Grid>
         </Box>
-      </CardContent>
+     
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogTitle>Search Parameters</DialogTitle>
@@ -283,6 +220,6 @@ export default function SearchForm() {
           <Button onClick={() => setOpenDialog(false)}>Close</Button>
         </DialogActions>
       </Dialog>
-    </Card>
+      </>
   );
 }

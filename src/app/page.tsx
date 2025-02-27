@@ -1,9 +1,10 @@
 "use client";
 
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box, Typography, Paper } from "@mui/material";
 import TopBar from "../components/TopBar";
 import SearchForm from "../components/SearchForm";
 import ResultsTable from "../components/ResultsTable";
+import { LineAxis } from "@mui/icons-material";
 
 export default function Home() {
   return (
@@ -30,10 +31,13 @@ export default function Home() {
           color="textPrimary"
           sx={{ fontWeight: "bold", mb: 3, mt: 2 }}
         >
-          Consulta de empresa
+          Consulta contribuinte
         </Typography>
+        <Paper sx={{ p: 2, mb: 4 }}>
         <SearchForm />
+      
         <ResultsTable />
+        </Paper>
       </Container>
     </Box>
   );

@@ -7,6 +7,7 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  Container,
 } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
@@ -31,8 +32,10 @@ export default function TopBar() {
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         py: 1,
       }}
+      
     >
-      <Toolbar>
+      <Container maxWidth="xl">
+      <Toolbar  >
         {/* Logo com altura reduzida */}
         <Image
           src="https://www.fazenda.mg.gov.br/export/system/modules/org.fazenda.mg.gov.br/resources/img/logo2.png"
@@ -87,6 +90,8 @@ export default function TopBar() {
           </Typography>
         </Box>
       </Toolbar>
+      </Container>
+     
     </AppBar>
   );
 }

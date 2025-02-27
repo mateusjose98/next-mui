@@ -8,11 +8,11 @@ import TopBar from "@/components/TopBar";
 
 const theme = createTheme({
   typography: {
-    fontFamily: `"Roboto", "Helvetica", "Arial", sans-serif`,
+    fontFamily: `"Popins", sans-serif`,
   },
   palette: {
     background: {
-      default: "#f0f0f0", // Light gray for the whole page background
+      default: "#F3F4F6", // Light gray for the whole page background
     },
     primary: {
       main: "hsl(0, 70%, 35.3%)", // Red for primary elements and text

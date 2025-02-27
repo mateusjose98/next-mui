@@ -15,30 +15,43 @@ import {
   Paper,
   TablePagination,
   CardHeader,
+  Icon,
 } from "@mui/material";
+import { RemoveRedEye } from "@mui/icons-material";
 
 interface Company {
   id: number;
-  name: string;
-  industry: string;
-  location: string;
+  nome: string;
+  inscricao: string;
+  quantidade: string;
 }
 
 const dummyData: Company[] = [
   {
-    id: 1,
-    name: "Tech Corp",
-    industry: "Technology",
-    location: "San Francisco",
+    id: 132132,
+    nome: "Sefaz soluções LTDA",
+    inscricao: "23123123222",
+    quantidade: "7",
   },
-  { id: 2, name: "Green Energy Ltd", industry: "Energy", location: "London" },
   {
-    id: 3,
-    name: "Global Foods",
-    industry: "Food & Beverage",
-    location: "New York",
+    id: 44441,
+    nome: "Sefaz soluções LTDA",
+    inscricao: "23123123222",
+    quantidade: "7",
   },
-  // Add more dummy data as needed
+  {
+    id: 555551,
+    nome: "Sefaz soluções LTDA",
+    inscricao: "23123123222",
+    quantidade: "7",
+  },
+  {
+    id: 66661,
+    nome: "Sefaz soluções LTDA",
+    inscricao: "23123123222",
+    quantidade: "7",
+  },
+
 ];
 
 export default function ResultsTable() {
@@ -57,20 +70,16 @@ export default function ResultsTable() {
   };
 
   return (
-    <Card>
-      <CardHeader
-        title="Search Results"
-        titleTypographyProps={{ variant: "h5" }}
-        sx={{ backgroundColor: "secondary.main", color: "text.primary" }}
-      />
-      <CardContent>
+    <>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="company results table">
+          <Table sx={{ minWidth: 650 }} stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell>Company Name</TableCell>
-                <TableCell>Industry</TableCell>
-                <TableCell>Location</TableCell>
+                <TableCell>Identificador</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Inscrição estadual</TableCell>
+                <TableCell>Qte. filiais</TableCell>
+                <TableCell>Ações</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -79,10 +88,14 @@ export default function ResultsTable() {
                 .map((company) => (
                   <TableRow key={company.id}>
                     <TableCell component="th" scope="row">
-                      {company.name}
+                      {company.id}
                     </TableCell>
-                    <TableCell>{company.industry}</TableCell>
-                    <TableCell>{company.location}</TableCell>
+                    <TableCell>{company.nome}</TableCell>
+                    <TableCell>{company.inscricao}</TableCell>
+                    <TableCell>{company.quantidade}</TableCell>
+                    <TableCell>
+                     <RemoveRedEye />
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -97,7 +110,6 @@ export default function ResultsTable() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </CardContent>
-    </Card>
+      </>
   );
 }
