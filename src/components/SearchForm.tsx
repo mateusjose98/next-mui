@@ -1,8 +1,9 @@
 "use client";
-
+import ClearIcon from '@mui/icons-material/Clear';
 import type React from "react";
 import { useState } from "react";
 import InputMask from "react-input-mask";
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Card,
   CardContent,
@@ -28,6 +29,7 @@ import {
   Typography,
   type SelectChangeEvent,
 } from "@mui/material";
+import { Search } from "@mui/icons-material";
 
 interface FormData {
   cnpj: string;
@@ -220,10 +222,10 @@ export default function SearchForm() {
             <Grid item xs={12}>
               
             <Box display="flex" justifyContent="flex-end">
-             <Button type="submit" variant="outlined" color="primary">
+             <Button startIcon={<ClearIcon />} type="submit" variant="outlined" color="primary">
                 Limpar
               </Button>
-              <Button style={{marginLeft: '5px'}} type="submit" variant="contained" color="primary">
+              <Button startIcon={<SearchIcon />} style={{marginLeft: '5px'}} type="submit" variant="contained" color="primary">
                 Pesquisar
               </Button>
             </Box>

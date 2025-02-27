@@ -31,7 +31,7 @@ export default function Home() {
           color="textPrimary"
           sx={{ fontWeight: "bold", mb: 3, mt: 2 }}
         >
-          Consulta contribuinte
+         Pesquisa contribuinte
         </Typography>
         <Paper sx={{ p: 2, mb: 4 }}>
         <SearchForm />
