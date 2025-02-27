@@ -33,6 +33,7 @@ interface FormData {
   cnpj: string;
   ie: string;
   isActive: boolean;
+  buscarNucleoIe: boolean;
   companyType: string;
   industry: string;
   locations: string[];
@@ -43,6 +44,7 @@ export default function SearchForm() {
     cnpj: "",
     ie: "",
     isActive: false,
+    buscarNucleoIe: false,
     companyType: "",
     industry: "",
     locations: [],
@@ -65,9 +67,41 @@ export default function SearchForm() {
   };
 
   const handleCnpjChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCpfCnpjChange = (event) => {
+      // Get only the numbers from the data input
+      let data = event.target.value.replace(/\D/g, "");
+      // Checking data length to define if it is cpf or cnpj
+      if (data.length > 11) {
+        // It's cnpj
+        let cnpj = `${data.substr(0, 2)}.${data.substr(2, 3)}.${data.substr(
+          5,
+          3
+        )}/`;
+        if (data.length > 12) {
+          cnpj += `${data.substr(8, 4)}-${data.substr(12, 2)}`;
+        } else {
+          cnpj += data.substr(8);
+        }
+        data = cnpj;
+      } else {
+        // It's cpf
+        let cpf = "";
+        let parts = Math.ceil(data.length / 3);
+        for (let i = 0; i < parts; i++) {
+          if (i === 3) {
+            cpf += `-${data.substr(i * 3)}`;
+            break;
+          }
+          cpf += `${i !== 0 ? "." : ""}${data.substr(i * 3, 3)}`;
+        }
+        data = cpf;
+      }
+      return data;
+    };
+    const valor = handleCpfCnpjChange(event);
     setFormData((prevData) => ({
       ...prevData,
-      cnpj: event.target.value,
+      cnpj: valor,
     }));
   };
 
@@ -96,35 +130,16 @@ export default function SearchForm() {
           <Grid container spacing={2}>
            
             <Grid item xs={6}>
-              <InputMask
-                mask="99.999.999/9999-99"
+            <TextField
                 value={formData.cnpj}
-                onChange={handleCnpjChange}
-                maskChar="_"
-              >
-                {() => (
-                  <TextField
-                    fullWidth
-                    id="cnpj"
-                    name="cnpj"
-                    label="CNPJ"
-                    variant="outlined"
-                  />
-                )}
-              </InputMask>
+                onChange={(value) => handleCnpjChange(value)}
+                id="cpfCnpj"
+                label="CNPJ/CPF"
+                defaultValue={''}
+                fullWidth
+      />
             </Grid>
-            <Grid item xs={6}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={formData.isActive}
-                    onChange={handleChange}
-                    name="isActive"
-                  />
-                }
-                label="Buscar por núcleo CNPJ"
-              />
-            </Grid>
+
             <Grid item xs={6}>
               <InputMask
                 mask="99.999.999/9999-99"
@@ -143,11 +158,35 @@ export default function SearchForm() {
                 )}
               </InputMask>
             </Grid>
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.isActive}
+                    onChange={handleChange}
+                    name="isActive"
+                  />
+                }
+                label="Buscar por núcleo CNPJ"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.buscarNucleoIe}
+                    onChange={handleChange}
+                    name="buscarNucleoIe"
+                  />
+                }
+                label="Buscar por núcleo IE"
+              />
+            </Grid>
+            
+            
           
            
-          
-            
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="locations-label">Situação</InputLabel>
                 <Select
@@ -177,7 +216,7 @@ export default function SearchForm() {
                   <MenuItem value="Homlogação">Homlogação</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               
             <Box display="flex" justifyContent="flex-end">
